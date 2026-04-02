@@ -18,6 +18,127 @@ dodaj(p1,p2) ::= <<
 ADD
 >>
 
+odejmij(p1,p2) ::= <<
+<twoop(p1,p2)>
+SUB
+>>
+
+mnoz(p1,p2) ::= <<
+<twoop(p1,p2)>
+MUL
+>>
+
+dziel(p1,p2) ::= <<
+<twoop(p1,p2)>
+DIV
+>>
+
+load(n) ::= <<
+PUSH [<n>]
+>>
+
+store(n, v) ::= <<
+<v>
+POP [<n>]
+>>
+
+declare(n) ::= <<
+DD <n>
+>>
+
 dek(n) ::= <<
 DD <n>
+>>
+
+if_stat(cond, then_code, else_code, label) ::= <<
+<cond>
+PUSH #label_else_<label>
+JE
+<then_code>
+PUSH #label_endif_<label>
+JMP
+label_else_<label>:
+<else_code>
+label_endif_<label>:
+>>
+
+cmp_eq(p1, p2, label) ::= <<
+<twoop(p1, p2)>
+CMP
+PUSH #1
+PUSH #cmp_end_<label>
+JE
+POP
+PUSH #0
+cmp_end_<label>:
+>>
+
+cmp_neq(p1, p2, label) ::= <<
+<twoop(p1, p2)>
+CMP
+PUSH #1
+PUSH #cmp_end_<label>
+JNE
+POP
+PUSH #0
+cmp_end_<label>:
+>>
+
+cmp_lt(p1, p2, label) ::= <<
+<twoop(p1, p2)>
+CMP
+PUSH #1
+PUSH #cmp_end_<label>
+JL
+POP
+PUSH #0
+cmp_end_<label>:
+>>
+
+cmp_gt(p1, p2, label) ::= <<
+<twoop(p1, p2)>
+CMP
+PUSH #1
+PUSH #cmp_end_<label>
+JG
+POP
+PUSH #0
+cmp_end_<label>:
+>>
+
+cmp_le(p1, p2, label) ::= <<
+<twoop(p1, p2)>
+CMP
+PUSH #1
+PUSH #cmp_end_<label>
+JLE
+POP
+PUSH #0
+cmp_end_<label>:
+>>
+
+cmp_ge(p1, p2, label) ::= <<
+<twoop(p1, p2)>
+CMP
+PUSH #1
+PUSH #cmp_end_<label>
+JGE
+POP
+PUSH #0
+cmp_end_<label>:
+>>
+
+and_op(p1, p2) ::= <<
+<twoop(p1, p2)>
+AND
+>>
+
+or_op(p1, p2) ::= <<
+<twoop(p1, p2)>
+OR
+>>
+
+not_op(p) ::= <<
+<p>
+NOT
 >>

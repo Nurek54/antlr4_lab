@@ -20,6 +20,113 @@ dodaj(p1,p2) ::= <<
 ADD A,B
 >>
 
+odejmij(p1,p2) ::= <<
+<twoop(p1=p2,p2=p1)>
+SUB A,B
+>>
+
+mnoz(p1,p2) ::= <<
+<twoop(p1,p2)>
+MUL A,B
+>>
+
+dziel(p1,p2) ::= <<
+<twoop(p1=p2,p2=p1)>
+DIV A,B
+>>
+
+load(n) ::= <<
+MOV A,[<n>]
+>>
+
+store(n, v) ::= <<
+<v>
+MOV [<n>],A
+>>
+
+declare(n) ::= <<
+DD <n>
+>>
+
 dek(n) ::= <<
 DD <n>
+>>
+
+if_stat(cond, then_code, else_code, label) ::= <<
+<cond>
+JE label_else_<label>
+<then_code>
+JMP label_endif_<label>
+label_else_<label>:
+<else_code>
+label_endif_<label>:
+>>
+
+cmp_eq(p1, p2, label) ::= <<
+<twoop(p1, p2)>
+CMP A,B
+MOV A,#1
+JE cmp_end_<label>
+MOV A,#0
+cmp_end_<label>:
+>>
+
+cmp_neq(p1, p2, label) ::= <<
+<twoop(p1, p2)>
+CMP A,B
+MOV A,#1
+JNE cmp_end_<label>
+MOV A,#0
+cmp_end_<label>:
+>>
+
+cmp_lt(p1, p2, label) ::= <<
+<twoop(p1, p2)>
+CMP A,B
+MOV A,#1
+JL cmp_end_<label>
+MOV A,#0
+cmp_end_<label>:
+>>
+
+cmp_gt(p1, p2, label) ::= <<
+<twoop(p1, p2)>
+CMP A,B
+MOV A,#1
+JG cmp_end_<label>
+MOV A,#0
+cmp_end_<label>:
+>>
+
+cmp_le(p1, p2, label) ::= <<
+<twoop(p1, p2)>
+CMP A,B
+MOV A,#1
+JLE cmp_end_<label>
+MOV A,#0
+cmp_end_<label>:
+>>
+
+cmp_ge(p1, p2, label) ::= <<
+<twoop(p1, p2)>
+CMP A,B
+MOV A,#1
+JGE cmp_end_<label>
+MOV A,#0
+cmp_end_<label>:
+>>
+
+and_op(p1, p2) ::= <<
+<twoop(p1, p2)>
+AND A,B
+>>
+
+or_op(p1, p2) ::= <<
+<twoop(p1, p2)>
+OR A,B
+>>
+
+not_op(p) ::= <<
+<p>
+NOT A
 >>
